@@ -84,17 +84,17 @@ public class Main {
 
         System.out.println("Digite a quantidade: ");
         int qtd = input.nextInt();
-        if(qtd <= 0){
+        if (qtd <= 0) {
             System.out.println("A quantidade deve ser superior a 0(ZERO).");
             return carrinho;
         }
         int totalItens = 0;
         for (int i = 0; i < carrinho.length; i++) {
-            if(carrinho[i] != null) {
+            if (carrinho[i] != null) {
                 totalItens = totalItens + carrinho[i][1];
             }
         }
-        if(totalItens + qtd > 20){
+        if (totalItens + qtd > 20) {
             System.out.println("Limite de itens ultrapassado em " + (totalItens + qtd - 20) + ". Max. de 20 itens.");
             System.out.println("Item não adicionado.");
             return carrinho;
@@ -140,7 +140,7 @@ public class Main {
 
         System.out.println("Digite a quantidade: ");
         int qtd = input.nextInt();
-        if(qtd <= 0){
+        if (qtd <= 0) {
             System.out.println("A quantidade deve ser superior a 0(ZERO).");
             return carrinho;
         }
@@ -166,12 +166,22 @@ public class Main {
 
     public static boolean exibirRecibo(Scanner input, int[][] carrinho, Object[][] itens) {
         //Printando os itens diponiveis 1 por 1
-        System.out.println("Digite um dentre o cupons disponiveis: 5, 10, 15");
-        double desconto = input.nextDouble();
-        if (desconto != 5.00 && desconto != 10.00 && desconto != 15.00) {
-            System.out.println("Cupom inválido");
-            return false;
+        System.out.println("Você possui um cupom de desconto ?[SIM, NÃO]");
+        String resposta = input.next();
+        double desconto = 0;
+        if (resposta.equals("SIM")) {
+            System.out.println("Digite um dentre o cupons disponiveis: 5, 10, 15");
+            desconto = input.nextDouble();
+            if (desconto != 5.00 && desconto != 10.00 && desconto != 15.00) {
+                System.out.println("Cupom inválido");
+                return false;
+            }
+        } else if (resposta.equals("NÃO")) {
+            desconto = 0;
+        } else {
+            System.out.println("Opcão digitada inválida");
         }
+
         System.out.println("---------------------------------------------------");
         System.out.printf("%-20s %-15s %s\n", "Item", "Quantidade", "Preço");
         double somaTotal = 0.0;
@@ -184,6 +194,7 @@ public class Main {
             }
         }
         System.out.println("---------------------------------------------------");
+
         double valorComDesconto = somaTotal - (somaTotal * (desconto / 100));
         System.out.printf("%-36s R$%.2f\n", "TOTAL:", somaTotal);
         System.out.println("---------------------------------------------------");
